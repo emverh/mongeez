@@ -12,6 +12,9 @@
 
 package org.mongeez;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mongeez.commands.ChangeSet;
 import org.mongeez.commands.Script;
 import org.mongeez.reader.ChangeSetFileProvider;
@@ -19,15 +22,11 @@ import org.mongeez.reader.ChangeSetReaderFactory;
 import org.mongeez.reader.FilesetXMLChangeSetFileProvider;
 import org.mongeez.validation.ChangeSetsValidator;
 import org.mongeez.validation.DefaultChangeSetsValidator;
-
-import com.mongodb.Mongo;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.mongodb.Mongo;
 
 
 public class Mongeez {
@@ -42,7 +41,7 @@ public class Mongeez {
 
     public void process() {
         List<ChangeSet> changeSets = getChangeSets();
-        new ChangeSetExecutor(mongo, dbName, context, auth).execute(changeSets);
+        new ChangeSetExecutor(mongo, dbName, context).execute(changeSets);
     }
 
     private List<ChangeSet> getChangeSets() {
@@ -83,9 +82,6 @@ public class Mongeez {
         this.dbName = dbName;
     }
 
-    public void setAuth(MongoAuth auth) {
-        this.auth = auth;
-    }
 
     public void setChangeSetsValidator(ChangeSetsValidator changeSetsValidator) {
         this.changeSetsValidator = changeSetsValidator;
